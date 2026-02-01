@@ -1,16 +1,17 @@
 # Spatial-Flow: High-Throughput MLOps Pipeline
 ### Orchestrating Real-Time, Asynchronous Multi-Model Inference
 
-![Demo](docs/demo.gif)
-
-
-
 ## Overview
 **Spatial-Flow** is a high-performance, distributed MLOps pipeline designed for real-time spatial perception. It orchestrates parallel, asynchronous inference of **YOLOv8** (Object Detection) and **Depth Anything** (Monocular Depth Estimation) on continuous video streams. The architecture is fully containerized with **Docker** and managed by **Ray Serve**, deployed on **AWS EKS** (Elastic Kubernetes Service) for scalable execution.
 
+![Demo](docs/demo.gif)
+
+
 ## System Architecture
 
-![Architecture](docs/architecture.png)
+<p align="center">
+  <img src="docs/architecture.png" width="75%">
+</p>
 
 **Spatial-Flow** implements a **Scatter-Gather** microservices pattern using **Ray Serve**:
 *   **Parallel Inference:** Asynchronous dispatch of video frames to decoupled **YOLOv8** (Detection) and **Depth Anything** (Depth) actors.
