@@ -6,3 +6,6 @@ opencv-python-headless
 accelerate
 pillow
 numpy<2
+onnxruntime-gpu
+onnx
+onnxscript
