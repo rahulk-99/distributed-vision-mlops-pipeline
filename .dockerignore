@@ -1,0 +1,20 @@
+# gitignore is a good start
+
+# Data
+data/
+test_output.txt
+
+# Models (Download them inside the container or mount them)
+*.pt
+
+# Git
+.git/
+
+# Ray temp
+/tmp/ray/
+runs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spatial-flow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spatial-flow
+  template:
+    metadata:
+      labels:
+        app: spatial-flow
+    spec:
+      containers:
+      - name: spatial-flow
+        # 1. Image (Replaces 'spatial-flow:gpu')
+        image: <AWS_ACCOUNT_ID>.dkr.ecr.us-east-2.amazonaws.com/spatial-flow:latest
+        
+        # 2. Port Mapping (Replaces '-p 8000:8000')
+        ports:
+        - containerPort: 8000
+        - containerPort: 8265 # Dashboard
+        
+        # 3. GPU Access (Restored)
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+            
+        # 4. Shared Memory (Replaces '--shm-size=2g')
+        volumeMounts:
+        - mountPath: /dev/shm
+          name: dshm
+          
+      # Shared Memory Volume Definition
+      volumes:
+      - name: dshm
+        emptyDir:
+          medium: Memory
+          sizeLimit: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spatial-flow-service
+spec:
+  # Exposes the service to the outside world (Public IP)
+  type: LoadBalancer
+  selector:
+    app: spatial-flow
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
